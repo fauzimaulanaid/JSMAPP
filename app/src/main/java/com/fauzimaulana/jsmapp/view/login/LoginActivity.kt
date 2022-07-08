@@ -1,10 +1,18 @@
-package com.fauzimaulana.jsmapp.view.register
+package com.fauzimaulana.jsmapp.view.login
 
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.TextPaint
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
+import android.text.style.StyleSpan
 import android.util.Log
 import android.util.Patterns
 import android.view.View
@@ -14,23 +22,24 @@ import android.widget.Toast
 import com.fauzimaulana.jsmapp.R
 import com.fauzimaulana.jsmapp.core.utils.CheckNetworkConnection
 import com.fauzimaulana.jsmapp.core.utils.Utils
-import com.fauzimaulana.jsmapp.databinding.ActivityRegisterBinding
-import com.fauzimaulana.jsmapp.view.login.LoginActivity
+import com.fauzimaulana.jsmapp.databinding.ActivityLoginBinding
+import com.fauzimaulana.jsmapp.view.home.HomeActivity
+import com.fauzimaulana.jsmapp.view.register.RegisterActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
-class RegisterActivity : AppCompatActivity() {
+class LoginActivity : AppCompatActivity() {
 
-    private var _binding: ActivityRegisterBinding? = null
+    private var _binding: ActivityLoginBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        _binding = ActivityRegisterBinding.inflate(layoutInflater)
+        _binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         auth = Firebase.auth
@@ -50,36 +59,47 @@ class RegisterActivity : AppCompatActivity() {
             )
         }
         supportActionBar?.hide()
+
+        val ss = SpannableString(resources.getString(R.string.register_please))
+        val clickableSpan: ClickableSpan = object : ClickableSpan() {
+            override fun onClick(view: View) {
+                val intent = Intent(this@LoginActivity, RegisterActivity::class.java)
+                startActivity(intent)
+            }
+
+            override fun updateDrawState(ds: TextPaint) {
+                super.updateDrawState(ds)
+                ds.color = Color.BLUE
+                ds.isUnderlineText = false
+            }
+        }
+        ss.setSpan(clickableSpan, 23, 31, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        val boldSpan = StyleSpan(Typeface.BOLD)
+        ss.setSpan(boldSpan, 23, 31, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+        binding.registerTextView.text = ss
+        binding.registerTextView.movementMethod = LinkMovementMethod.getInstance()
+        binding.registerTextView.highlightColor = Color.TRANSPARENT
     }
 
     private fun setupAction() {
-        binding.registerButton.setOnClickListener {
+        binding.loginButton.setOnClickListener {
             val email = binding.emailEditText.text.toString()
             val password = binding.passwordEditText.text.toString()
-            val rePassword = binding.retypePasswordEditText.text.toString()
             when {
                 email.isEmpty() -> {
-                    binding.emailEditTextLayout.error = resources.getString(R.string.email_error_message)
+                    binding.emailEditTextLayout.error = resources.getString(R.string.email_empty)
                 }
                 password.isEmpty() -> {
-                    binding.passwordEditTextLayout.error = resources.getString(R.string.password_message)
-                }
-                rePassword.isEmpty() -> {
-                    binding.retypePasswordEditTextLayout.error = resources.getString(R.string.retype_password_empty)
-                }
-                password.length < 6 -> {
-                    binding.passwordEditTextLayout.error = resources.getString(R.string.password_error)
+                    binding.passwordEditTextLayout.error = resources.getString(R.string.password_empty)
                 }
                 !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
                     binding.emailEditTextLayout.error = resources.getString(R.string.email_invalid_format)
                 }
-                password != rePassword -> {
-                    binding.retypePasswordEditTextLayout.error = resources.getString(R.string.password_different)
-                }
                 else -> {
                     val isConnected: Boolean = CheckNetworkConnection().networkCheck(this)
                     if (isConnected) {
-                        registerUser(email, password)
+                        userLogin(email, password)
                     } else {
                         Utils.showAlertNoInternet(this)
                     }
@@ -88,17 +108,17 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-    private fun registerUser(email: String, password: String) {
-        auth.createUserWithEmailAndPassword(email, password)
+    private fun userLogin(email: String, password: String) {
+        auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    //Register success
-                    Log.d(TAG, "registerUserWithEmail:success")
+                    //Login success
+                    Log.d(TAG, "loginWithEmail:success")
                     val user = auth.currentUser
                     updateUI(user)
                 } else {
-                    //Register failed
-                    Log.w(TAG, "registerUserWithEmail:failure", task.exception)
+                    //Login failed
+                    Log.w(TAG, "loginWithEmail:failure", task.exception)
                     Toast.makeText(baseContext, "Authentication failed.", Toast.LENGTH_SHORT).show()
                     updateUI(null)
                 }
@@ -107,13 +127,13 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun updateUI(currentUser: FirebaseUser?) {
         if (currentUser != null) {
-            binding.contentRegister.visibility = View.GONE
-            binding.viewUserCreated.root.visibility = View.VISIBLE
+            binding.contentLogin.visibility = View.GONE
+            binding.viewUserLogin.root.visibility = View.VISIBLE
             val screenTime = 3000L
             Handler(mainLooper).postDelayed({
-                val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                val intent = Intent(this@LoginActivity, HomeActivity::class.java)
                 startActivity(intent)
+                finish()
             }, screenTime)
         }
     }
@@ -124,6 +144,6 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     companion object {
-        const val TAG = "RegisterActivity"
+        const val TAG = "LoginActivity"
     }
 }
