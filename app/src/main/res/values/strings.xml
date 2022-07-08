@@ -24,4 +24,12 @@
     <string name="email_error_message">Please input your email</string>
     <string name="registration_failed">Registration cannot be proceed</string>
     <string name="password_message">Please input password that you want</string>
+    <string name="email_invalid_format">Invalid email format</string>
+
+    <string name="retype_password">Re-Password</string>
+    <string name="hint_retype_password">Retype your password for confirmation</string>
+    <string name="retype_password_empty">You should confirm your password by retype it</string>
+    <string name="password_error">Password must at least 6 character</string>
+    <string name="password_different">Password does not match</string>
+
 </resources>

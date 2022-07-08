@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.buttonTest.setOnClickListener {
-            val intent = Intent(this, HomeActivity::class.java)
+            val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
         }
 

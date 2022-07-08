@@ -1,9 +1,13 @@
 package com.fauzimaulana.jsmapp.view.register
 
+import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.util.Log
 import android.util.Patterns
+import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.Toast
@@ -11,16 +15,25 @@ import com.fauzimaulana.jsmapp.R
 import com.fauzimaulana.jsmapp.core.utils.CheckNetworkConnection
 import com.fauzimaulana.jsmapp.core.utils.Utils
 import com.fauzimaulana.jsmapp.databinding.ActivityRegisterBinding
+import com.fauzimaulana.jsmapp.view.login.MainActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class RegisterActivity : AppCompatActivity() {
 
     private var _binding: ActivityRegisterBinding? = null
     private val binding get() = _binding!!
 
+    private lateinit var auth: FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        auth = Firebase.auth
 
         setupView()
         setupAction()
@@ -41,33 +54,76 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun setupAction() {
         binding.registerButton.setOnClickListener {
-            val isConnected: Boolean = CheckNetworkConnection().networkCheck(this)
-            if (isConnected) {
-                val email = binding.emailEditText.text.toString()
-                val password = binding.passwordEditText.text.toString()
-                when {
-                    email.isEmpty() -> {
-                        binding.emailEditTextLayout.error = resources.getString(R.string.email_error_message)
-                    }
-                    password.isEmpty() -> {
-                        binding.passwordEditTextLayout.error = resources.getString(R.string.password_message)
-                    }
-                    password.length < 6 || !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
-                        Toast.makeText(this, resources.getString(R.string.registration_failed), Toast.LENGTH_SHORT).show()
-                    }
-                    else -> {
+            val email = binding.emailEditText.text.toString()
+            val password = binding.passwordEditText.text.toString()
+            val rePassword = binding.retypePasswordEditText.text.toString()
+            when {
+                email.isEmpty() -> {
+                    binding.emailEditTextLayout.error = resources.getString(R.string.email_error_message)
+                }
+                password.isEmpty() -> {
+                    binding.passwordEditTextLayout.error = resources.getString(R.string.password_message)
+                }
+                rePassword.isEmpty() -> {
+                    binding.retypePasswordEditTextLayout.error = resources.getString(R.string.retype_password_empty)
+                }
+                password.length < 6 -> {
+                    binding.passwordEditTextLayout.error = resources.getString(R.string.password_error)
+                }
+                !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
+                    binding.emailEditTextLayout.error = resources.getString(R.string.email_invalid_format)
+                }
+                password != rePassword -> {
+                    binding.retypePasswordEditTextLayout.error = resources.getString(R.string.password_different)
+                }
+                else -> {
+                    val isConnected: Boolean = CheckNetworkConnection().networkCheck(this)
+                    if (isConnected) {
+                        registerUser(email, password)
+                    } else {
+                        Utils.showAlertNoInternet(this)
                     }
                 }
-
-
-            } else {
-                Utils.showAlertNoInternet(this)
             }
+        }
+    }
+
+    private fun registerUser(email: String, password: String) {
+        auth.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    //Register success
+                    Log.d(TAG, "registerUserWithEmail:success")
+                    val user = auth.currentUser
+                    updateUI(user)
+                } else {
+                    //Register failed
+                    Log.w(TAG, "registerUserWithEmail:failure", task.exception)
+                    Toast.makeText(baseContext, "Authentication failed.", Toast.LENGTH_SHORT).show()
+                    updateUI(null)
+                }
+            }
+    }
+
+    private fun updateUI(currentUser: FirebaseUser?) {
+        if (currentUser != null) {
+            binding.contentRegister.visibility = View.GONE
+            binding.viewUserCreated.root.visibility = View.VISIBLE
+            val screenTime = 3000L
+            Handler(mainLooper).postDelayed({
+                val intent = Intent(this@RegisterActivity, MainActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                startActivity(intent)
+            }, screenTime)
         }
     }
 
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    companion object {
+        const val TAG = "RegisterActivity"
     }
 }
