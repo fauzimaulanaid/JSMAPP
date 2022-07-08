@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "775619749489",
+    "project_id": "jsm-app-a0cd0",
+    "storage_bucket": "jsm-app-a0cd0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:775619749489:android:849a445f9979eb02651dd0",
+        "android_client_info": {
+          "package_name": "com.fauzimaulana.jsmapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "775619749489-ro5l54i9vt63950a18hc778lvcd45o3s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDBYTUo-KGMtO54HWIJWOR3gBQD3ftRuMU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "775619749489-ro5l54i9vt63950a18hc778lvcd45o3s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
