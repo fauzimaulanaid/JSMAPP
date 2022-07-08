@@ -11,7 +11,7 @@ import com.fauzimaulana.jsmapp.core.domain.model.LoginModel
 import com.fauzimaulana.jsmapp.core.domain.model.RegisterModel
 import com.fauzimaulana.jsmapp.core.domain.model.UserModel
 import com.fauzimaulana.jsmapp.core.domain.repository.IJSMRepository
-import com.fauzimaulana.jsmapp.core.uttils.DataMapper
+import com.fauzimaulana.jsmapp.core.utils.DataMapper
 import com.fauzimaulana.jsmapp.core.vo.Resource
 import kotlinx.coroutines.flow.Flow
 

@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">JSM APP</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="image_user">Image User</string>
+    <string name="user_name_placeholder">%s %s</string>
+    <string name="title_home">Home</string>
+    <string name="title_account">Account</string>
+    <string name="test">Test</string>
 </resources>

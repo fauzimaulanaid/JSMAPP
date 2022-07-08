@@ -1,9 +1,11 @@
-package com.fauzimaulana.jsmapp.view.home
+package com.fauzimaulana.jsmapp.view.login
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.fauzimaulana.jsmapp.R
 import com.fauzimaulana.jsmapp.databinding.ActivityMainBinding
+import com.fauzimaulana.jsmapp.view.home.HomeActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -14,5 +16,16 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.buttonTest.setOnClickListener {
+            val intent = Intent(this, HomeActivity::class.java)
+            startActivity(intent)
+        }
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }

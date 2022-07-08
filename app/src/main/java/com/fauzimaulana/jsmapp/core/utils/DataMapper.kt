@@ -1,4 +1,4 @@
-package com.fauzimaulana.jsmapp.core.uttils
+package com.fauzimaulana.jsmapp.core.utils
 
 import com.fauzimaulana.jsmapp.core.data.source.remote.response.CreateUserResponse
 import com.fauzimaulana.jsmapp.core.data.source.remote.response.LoginResponse

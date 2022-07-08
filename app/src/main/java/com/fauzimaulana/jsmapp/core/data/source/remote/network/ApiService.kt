@@ -18,7 +18,7 @@ interface ApiService {
         @Field("password") password: String
     ): LoginResponse
 
-    @GET("aoi/users")
+    @GET("api/users")
     suspend fun getAllUser(): ListUserResponse
 
     @FormUrlEncoded
