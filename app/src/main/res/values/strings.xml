@@ -46,5 +46,19 @@
     <string name="avatar">Avatar</string>
     <string name="edit">Edit</string>
     <string name="detail_user">User Detail</string>
+    <string name="add">Add</string>
+    <string name="delete">Delete</string>
+
+    <string name="camera">Camera</string>
+    <string name="gallery">Gallery</string>
+    <string name="update">Update</string>
+    <string name="submit">Submit</string>
+    <string name="hint_first_name">Please input your first name</string>
+    <string name="hint_last_name">Please input your last name</string>
+    <string name="save">Save</string>
+    <string name="changed_lost">Change will be lost</string>
+    <string name="confirmation">Are you sure want to cancel?</string>
+    <string name="first_name_empty">First Name cannot be empty</string>
+    <string name="last_name_empty">Last Name cannot be empty</string>
 
 </resources>

@@ -1,14 +1,15 @@
 package com.fauzimaulana.jsmapp.view.home.ui.home
 
+import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.fauzimaulana.jsmapp.R
 import com.fauzimaulana.jsmapp.core.vo.Resource
 import com.fauzimaulana.jsmapp.databinding.FragmentHomeBinding
+import com.fauzimaulana.jsmapp.view.addupdate.AddUpdateActivity
 import com.fauzimaulana.jsmapp.view.home.UserAdapter
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -30,9 +31,10 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
+    @Suppress("DEPRECATION")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        setHasOptionsMenu(true)
         userAdapter = UserAdapter()
         showUserList()
 
@@ -62,6 +64,25 @@ class HomeFragment : Fragment() {
             adapter = userAdapter
         }
     }
+
+
+    @Suppress("DEPRECATION")
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_home, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    @Suppress("DEPRECATION")
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.add -> {
+                val intent = Intent(requireContext(), AddUpdateActivity::class.java)
+                startActivity(intent)
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
