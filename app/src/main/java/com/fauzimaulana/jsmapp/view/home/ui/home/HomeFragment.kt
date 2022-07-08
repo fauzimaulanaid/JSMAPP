@@ -41,14 +41,18 @@ class HomeFragment : Fragment() {
     private fun showUserList() {
         homeViewModel.getAllUsers().observe(viewLifecycleOwner) { users ->
             when (users) {
-                is Resource.Loading -> binding.viewLoading.root.visibility = View.VISIBLE
+                is Resource.Loading -> {
+                    binding.viewLoading.root.visibility = View.VISIBLE
+                    binding.rvUser.visibility = View.GONE
+                }
                 is Resource.Success -> {
                     binding.viewLoading.root.visibility = View.GONE
+                    binding.rvUser.visibility = View.VISIBLE
                     userAdapter.submitList(users.data)
                 }
                 is Resource.Error -> {
                     binding.viewLoading.root.visibility = View.GONE
-                    Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Error, Something Went Wrong", Toast.LENGTH_SHORT).show()
                 }
             }
         }

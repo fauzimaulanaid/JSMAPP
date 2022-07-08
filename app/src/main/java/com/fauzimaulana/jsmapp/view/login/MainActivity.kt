@@ -6,6 +6,7 @@ import android.os.Bundle
 import com.fauzimaulana.jsmapp.R
 import com.fauzimaulana.jsmapp.databinding.ActivityMainBinding
 import com.fauzimaulana.jsmapp.view.home.HomeActivity
+import com.fauzimaulana.jsmapp.view.register.RegisterActivity
 
 class MainActivity : AppCompatActivity() {
 

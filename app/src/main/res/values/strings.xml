@@ -7,4 +7,21 @@
     <string name="title_home">Home</string>
     <string name="title_account">Account</string>
     <string name="test">Test</string>
+
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="password">Password</string>
+    <string name="register_please">Don\'t have an account? Register now!</string>
+    <string name="hint_email_or_phone">example@example.com</string>
+    <string name="hint_password">Must at least 6 character</string>
+    <string name="copyright">©2022 Muhammad Fauzi Maulana</string>
+
+    <string name="ok">OK</string>
+    <string name="no_internet_title">There is no internet</string>
+    <string name="no_internet_message">Please check your connection!</string>
+
+
+    <string name="email_error_message">Please input your email</string>
+    <string name="registration_failed">Registration cannot be proceed</string>
+    <string name="password_message">Please input password that you want</string>
 </resources>
