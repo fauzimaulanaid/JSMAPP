@@ -22,7 +22,8 @@
             android:exported="false" />
         <activity
             android:name=".view.detail.DetailActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:label="@string/detail_user"/>
         <activity
             android:name=".view.home.HomeActivity"
             android:exported="true" >

@@ -1,5 +1,6 @@
 package com.fauzimaulana.jsmapp.view.home
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -9,6 +10,7 @@ import com.bumptech.glide.Glide
 import com.fauzimaulana.jsmapp.R
 import com.fauzimaulana.jsmapp.core.domain.model.UserModel
 import com.fauzimaulana.jsmapp.databinding.ItemListBinding
+import com.fauzimaulana.jsmapp.view.detail.DetailActivity
 
 class UserAdapter: ListAdapter<UserModel, UserAdapter.UserViewHolder>(DIFF_CALLBACK) {
     class UserViewHolder(private val binding: ItemListBinding): RecyclerView.ViewHolder(binding.root) {
@@ -19,6 +21,12 @@ class UserAdapter: ListAdapter<UserModel, UserAdapter.UserViewHolder>(DIFF_CALLB
                     .into(imageUser)
                 textViewName.text = itemView.resources.getString(R.string.user_name_placeholder, user.firstName, user.lastName)
                 textViewEmail.text = user.email
+
+                itemView.setOnClickListener {
+                    val intent = Intent(itemView.context, DetailActivity::class.java)
+                    intent.putExtra(DetailActivity.EXTRA_DATA, user)
+                    itemView.context.startActivity(intent)
+                }
             }
         }
     }

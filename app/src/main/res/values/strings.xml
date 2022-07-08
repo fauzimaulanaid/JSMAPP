@@ -40,4 +40,11 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
 
+    <string name="user_id">User ID</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="avatar">Avatar</string>
+    <string name="edit">Edit</string>
+    <string name="detail_user">User Detail</string>
+
 </resources>
