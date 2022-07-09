@@ -2,7 +2,6 @@ package com.fauzimaulana.jsmapp.view.addupdate
 
 import android.Manifest
 import android.content.Intent
-import android.content.Intent.EXTRA_USER
 import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
 import android.net.Uri
