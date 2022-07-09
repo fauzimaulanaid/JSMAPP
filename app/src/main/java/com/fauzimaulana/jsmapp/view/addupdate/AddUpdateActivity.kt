@@ -110,6 +110,7 @@ class AddUpdateActivity : AppCompatActivity() {
                             val screenTime = 3000L
                             Handler(mainLooper).postDelayed({
                                 val intent = Intent(this@AddUpdateActivity, HomeActivity::class.java)
+                                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                                 startActivity(intent)
                                 finish()
                             }, screenTime)
@@ -121,6 +122,7 @@ class AddUpdateActivity : AppCompatActivity() {
                                 val screenTime = 3000L
                                 Handler(mainLooper).postDelayed({
                                     val intent = Intent(this@AddUpdateActivity, HomeActivity::class.java)
+                                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                                     startActivity(intent)
                                     finish()
                                 }, screenTime)

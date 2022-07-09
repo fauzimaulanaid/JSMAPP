@@ -7,6 +7,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fauzimaulana.jsmapp.R
+import com.fauzimaulana.jsmapp.core.utils.CheckNetworkConnection
+import com.fauzimaulana.jsmapp.core.utils.Utils
 import com.fauzimaulana.jsmapp.core.vo.Resource
 import com.fauzimaulana.jsmapp.databinding.FragmentHomeBinding
 import com.fauzimaulana.jsmapp.view.addupdate.AddUpdateActivity
@@ -54,6 +56,11 @@ class HomeFragment : Fragment() {
                 }
                 is Resource.Error -> {
                     binding.viewLoading.root.visibility = View.GONE
+                    val isConnected: Boolean = CheckNetworkConnection().networkCheck(requireContext())
+                    if (!isConnected) {
+                        Utils.showAlertNoInternet(requireContext())
+                        binding.viewNoInternet.root.visibility = View.VISIBLE
+                    }
                     Toast.makeText(context, "Error, Something Went Wrong", Toast.LENGTH_SHORT).show()
                 }
             }

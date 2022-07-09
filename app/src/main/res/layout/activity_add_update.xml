@@ -85,9 +85,7 @@
                     android:layout_height="64dp"
                     android:gravity="top"
                     android:hint="@string/hint_email_or_phone"
-                    android:inputType="textMultiLine"
-                    android:lines="2"
-                    android:singleLine="false"/>
+                    android:singleLine="true"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -107,9 +105,7 @@
                     android:layout_height="64dp"
                     android:gravity="top"
                     android:hint="@string/hint_first_name"
-                    android:inputType="textMultiLine"
-                    android:lines="2"
-                    android:singleLine="false"/>
+                    android:singleLine="true"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -129,9 +125,7 @@
                     android:layout_height="64dp"
                     android:gravity="top"
                     android:hint="@string/hint_last_name"
-                    android:inputType="textMultiLine"
-                    android:lines="2"
-                    android:singleLine="false"/>
+                    android:singleLine="true"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -162,15 +156,6 @@
         <include
             android:id="@+id/viewSuccess"
             layout="@layout/view_success"
-            android:visibility="gone"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
-
-        <include
-            android:id="@+id/viewLoading"
-            layout="@layout/view_loading"
             android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
